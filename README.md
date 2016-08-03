@@ -1,7 +1,11 @@
 # docker-cron-backup-mongodb
 
 cron を使って、定期的に mongodb のデータをバックアップするための docker イメージです。
-mongo-backup.sh の DB_HOST に mongodb のホスト名を、BACKUP_DIR にバックアップ先ディレクトリのパスを指定します。
+
+## 設定
+mongo-backup.sh の変数を編集します。
+- DB_HOST : mongodb のホスト名
+- BACKUP_DIR : バックアップ先ディレクトリのパス
 
 ## 使用例
 例えば、docker-compose を使う場合は、次のような docker-compose.yml を準備します。
