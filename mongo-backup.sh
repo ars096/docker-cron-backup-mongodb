@@ -34,7 +34,7 @@ if [ $TS_DAY -eq "01" ]; then
         REMOVE_YEAR=$(($TS_YEAR - 1))
     fi
     
-    for i in {1..31}; do
+    for i in {2..31}; do
         REMOVE_PATH=$BACKUP_DIR/$REMOVE_YEAR-$REMOVE_MONTH-$(printf "%02d" i)
         if [ -e $REMOVE_PATH ]; then
             rm -rf --preserve-root $REMOVE_PATH
