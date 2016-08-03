@@ -16,9 +16,7 @@ version: '2'
 services:
   mongo:
     image: mongo
-    volumes:
-     - /home/core/db:/data/db
-  
+
   mongo-backup:
     image: mongo-backup
     links:
