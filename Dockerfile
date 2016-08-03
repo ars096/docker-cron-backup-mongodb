@@ -11,5 +11,7 @@ ADD mongo-backup.sh /mongo-backup.sh
 RUN chmod +x /mongo-backup.sh
 RUN chmod 0644 /etc/cron.d/mongo-backup
 
+RUN touch /var/log/cron.log
+
 # Run the command on container startup
-CMD cron
+CMD cron && top -f /var/log/cron.log
