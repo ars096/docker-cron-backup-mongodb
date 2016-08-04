@@ -10,6 +10,7 @@ TS_MONTH=$(date --utc '+%m')
 TS_DAY=$(date --utc '+%d')
 TS_HOUR=$(date --utc '+%H')
 
+echo "$(date): mongodump --host $DB_HOST --out $BACKUP_DIR/$TS_DATE/$TS_HOUR" >> /var/log/cron.log 2>&1
 mongodump --host $DB_HOST --out $BACKUP_DIR/$TS_DATE/$TS_HOUR
 
 
