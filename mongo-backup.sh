@@ -15,29 +15,26 @@ mongodump --host $DB_HOST --out $BACKUP_DIR/$TS_DATE/$TS_HOUR
 
 # reorder old backup data
 
-## remove hourly backup when the end of the day
-if [ $TS_HOUR -eq "23" ]; then
-    for i in {0..22}; do
-        REMOVE_PATH=$BACKUP_DIR/$TS_DATE/$(printf "%02d" i)
-        if [ -e $REMOVE_PATH ]; then
-            rm -rf --preserve-root $REMOVE_PATH
+## remove hourly backup at the begining of new day
+if [ $TS_HOUR -eq "00" ]; then
+    for i in {1..23}; do
+        RM_DATE=$(date --utc '+%Y-%m-%d' --date '2 days ago')
+        RM_PATH=$BACKUP_DIR/$RM_DATE/$(printf "%02d" i)
+        if [ -e $RM_PATH ]; then
+            rm -rf --preserve-root $RM_PATH
         fi
     done
 fi
 
-## remove last month daily backup when the start of month
+## remove last month daily backup at the begining of new month
 if [ $TS_DAY -eq "01" ]; then
-    REMOVE_YEAR=$TS_YEAR
-    REMOVE_MONTH=$(($TS_MONTH - 1))
-    if [ $REMOVE_MONTH -eq 0 ]; then
-        REMOVE_MONTH=12
-        REMOVE_YEAR=$(($TS_YEAR - 1))
-    fi
+    RM_YEAR=$(date --utc '+%Y' --date '2 months ago')
+    RM_MONTH=$(date --utc '+%m' --date '2 months ago')
     
     for i in {2..31}; do
-        REMOVE_PATH=$BACKUP_DIR/$REMOVE_YEAR-$REMOVE_MONTH-$(printf "%02d" i)
-        if [ -e $REMOVE_PATH ]; then
-            rm -rf --preserve-root $REMOVE_PATH
+        RM_PATH=$BACKUP_DIR/$RM_YEAR-$RM_MONTH-$(printf "%02d" i)
+        if [ -e $RM_PATH ]; then
+            rm -rf --preserve-root $RM_PATH
         fi
     done
 fi
