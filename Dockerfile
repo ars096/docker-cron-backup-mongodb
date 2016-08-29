@@ -14,4 +14,4 @@ RUN chmod 0644 /etc/cron.d/mongo-backup
 RUN touch /var/log/cron.log
 
 # Run the command on container startup
-CMD cron && touch /etc/cron.d/mongo-backup && tail -f /var/log/cron.log
+CMD cron && touch /etc/cron.d/mongo-backup && tail -f /dev/null
